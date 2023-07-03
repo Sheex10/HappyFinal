@@ -1,1 +1,9 @@
-/* XKJDKSJDKSJDKJSKJ */
+/* TAMAÑO DE IMAGENES */
+#fotoproductos{
+  max-width: 55%;
+  height: auto;
+  margin: 20px;
+  padding: 5px;
+  display: inline-block;
+  margin: auto;
+  }
