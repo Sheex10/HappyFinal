@@ -79,8 +79,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'USER': 'exafinal',
+        'PASSWORD': '123456',
+        'TEST': {
+            'USER': 'default_test',
+            'TABLESPACE': 'default_test_tbls',
+            'TBLSPACE_TEMP': 'default_test_tbls_tmp',
+        }
     }
 }
+    
 
 
 # Password validation
