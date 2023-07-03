@@ -3,6 +3,8 @@ from .models import Producto, Usuario, Categoria
 
 # Create your views here.
 
+#Vistas principales
+
 def home(request):
     return render(request, 'ApUno/home.html')
 
@@ -26,4 +28,18 @@ def buscar_interno_producto(request,id):
     contexto = {
         "nombree": prod
     }
-    return render(request,'ApUno/Correa.html',contexto)
+    return render(request,'ApUno/CamaPerro.html',contexto)
+
+#Vistas para los productos
+
+def CamaPerro(request):
+    nombreC = "Cama antiestres"
+    precioC = "PRECIO : $30.990"
+    descripcionC = "La cama antiestrés -100-120cm- Damasco disponibles en diferentes tamaños.Esta cama calmante tiene un tejido especial de suave felpa, para que tu mascota esté comoda y relajada."
+
+    contexto = {
+        "nombre" : nombreC,
+        "precio" : precioC,
+        "descripcion" : descripcionC
+    }
+    return render(request, 'ApUno/CamaPerro.html', contexto)
