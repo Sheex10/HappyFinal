@@ -15,7 +15,11 @@ def Perros(request):
     return render(request,'ApUno/Perros.html', contexto)
 
 def Gatos(request):
-    return render(request, 'ApUno/Gatos.html')
+    listaProductos = Producto.objects.filter(categoria = 3)
+    contexto={
+        "nomProd": listaProductos
+    }
+    return render(request, 'ApUno/Gatos.html', contexto)
 
 def buscar_interno_producto(request,id):
     prod = Producto.objects.get(id_producto = id)
