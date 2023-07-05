@@ -49,3 +49,30 @@ def CamaPerro(request):
         "descripcion" : descripcionC
     }
     return render(request, 'ApUno/CamaPerro.html', contexto)
+
+#Esto es para cuando se agregue un producto.
+
+def formProductos(request):
+    vIdProd= request.POST['id']
+    vDescripcion= request.POST['desc']
+    vPrecio= request.POST['precio']
+    vFoto=request.FILES['foto']
+    vCategoria=request.POST['categoria']
+    vStock=request.POST['stock']
+    vNombre=request.POST['nombre']
+    vRegCategoria=Categoria.objects.get(id_categoria=vCategoria)
+
+    Producto.objects.create(nombre=vNombre, id_producto=vIdProd, descripcion=vDescripcion,  precio=vPrecio, foto=vFoto, categoria=vRegCategoria, stock=vStock)
+
+    if vRegCategoria.id_categoria==4:
+        return redirect('Perros')
+    if vRegCategoria.id_categoria==3:
+        return redirect('Gatos')
+    
+def Agregar(request):
+    listaCategoria=Categoria.objects.all()
+    contexto={
+        "Categorias":listaCategoria
+
+    }
+    return render(request, 'ApUno/Agregar.html', contexto)

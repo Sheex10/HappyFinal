@@ -1,0 +1,50 @@
+{% extends 'ApUno/PlantillaNavBar.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Agregar Producto</title>
+{% endblock titulo %}
+
+{% block cuerpo %}
+
+<div class="container mt-3">
+    <h2 style="text-shadow: 2px 2px 5px rgb(160, 154, 154);" >Agregar Producto</h2>
+    <form action="{% url 'formProductos' %}" method="POST" id="loginform" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3 mt-3">
+        <label for="nombre" style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto" name="nombre">
+      </div>
+      <div class="mb-3">
+        <label for="precio" style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Id:</label>
+        <input type="number"class="cant" id="id"  min="1" max="200" name="id">
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="foto" style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Agregue una foto:</label>
+        <input accept="image/png,image/jpeg" type="file" id="foto" name="foto">
+      </div>
+      <div class="mb-3">
+        <label for="precio" style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Precio:</label>
+        <input type="text" class="form-control" id="precio" placeholder="Precio del producto" name="precio">
+      </div>
+      <div class="mb-3">
+        <label for="precio" style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Descripcion:</label>
+        <input type="text" class="form-control" id="desc" placeholder="Descripción del producto" name="desc">
+      </div>
+      <div class="mb-3">
+        <label for="precio" style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Stock:</label>
+        <input type="number"class="cant" id="stock"  min="1" max="200" name="stock">
+      </div>
+      <div>
+        <label style="text-shadow: 2px 2px 5px rgb(160, 154, 154);">Categoria</label>
+        <select class="form-control" name="categoria" id="categoria">
+            {% for z in Categorias %}
+            <option value="{{ z.id_categoria }}">{{ z.nombre }}</option>
+            {% endfor %}
+        </select>
+     </div>
+      <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+  </div>
+
+{% endblock cuerpo %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, Gatos, Perros, buscar_interno_producto, CamaPerro
+from .views import home, Gatos, Perros, buscar_interno_producto, CamaPerro, formProductos, Agregar
 
 urlpatterns = [
     path('', home,name="home"),
@@ -7,4 +7,6 @@ urlpatterns = [
     path('Perros', Perros,name="Perros"),
     path('buscar_interno_producto/<int:id>',buscar_interno_producto,name="buscar_interno_producto"),
     path('Cama',CamaPerro,name="CamaPerro"),
+    path('formProductos',formProductos, name="formProductos"),
+    path('Agregar',Agregar,name="Agregar"),
 ]
