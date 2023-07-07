@@ -76,3 +76,6 @@ def Agregar(request):
 
     }
     return render(request, 'ApUno/Agregar.html', contexto)
+
+def InicioSesion(request):
+    return render(request, 'ApUno/InicioSesion.html')
