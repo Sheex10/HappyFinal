@@ -80,6 +80,10 @@ def Agregar(request):
 def InicioSesion(request):
     return render(request, 'ApUno/InicioSesion.html')
 
+def ControlProd(request):
+   
+    return render(request, 'ApUno/ControlProd.html')
+
 #----------------
 def pruebaEDIT(request):
    
