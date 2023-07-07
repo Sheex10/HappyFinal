@@ -70,7 +70,7 @@ TEMPLATES = [
         },
     },
 ]
-
+LOGIN_REDIRECT_URL ="home"
 WSGI_APPLICATION = 'HappyFinal.wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
