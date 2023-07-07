@@ -38,17 +38,17 @@ def buscar_interno_producto(request,id):
 
 #Vistas para los productos
 
-def CamaPerro(request):
-    nombreC = "Cama antiestres"
-    precioC = "PRECIO : $30.990"
-    descripcionC = "La cama antiestrés -100-120cm- Damasco disponibles en diferentes tamaños.Esta cama calmante tiene un tejido especial de suave felpa, para que tu mascota esté comoda y relajada."
+def EditProducto(request):
+    listaProductos = Producto.objects.filter(categoria = 4)
+    contexto={
+        "nomProd": listaProductos
 
-    contexto = {
-        "nombre" : nombreC,
-        "precio" : precioC,
-        "descripcion" : descripcionC
     }
-    return render(request, 'ApUno/CamaPerro.html', contexto)
+    return render(request,'ApUno/EditProducto.html',contexto)
+
+def CamaPerro(request):
+   
+    return render(request, 'ApUno/CamaPerro.html')
 
 #Esto es para cuando se agregue un producto.
 
@@ -79,3 +79,9 @@ def Agregar(request):
 
 def InicioSesion(request):
     return render(request, 'ApUno/InicioSesion.html')
+
+#----------------
+def pruebaEDIT(request):
+   
+    return render(request, 'ApUno/pruebaEDIT.html')
+#----------------
