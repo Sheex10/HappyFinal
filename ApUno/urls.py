@@ -1,4 +1,5 @@
 from django.urls import path
+from ApUno import views
 from .views import home, Gatos, Perros, buscar_interno_producto, CamaPerro, formProductos, Agregar, InicioSesion, EditProducto, pruebaEDIT,ControlProd
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('EditProducto',EditProducto,name="EditProducto"),
     path('pruebaEDIT',pruebaEDIT,name="pruebaEDIT"),
     path('ControlProd',ControlProd,name="ControlProd"),
+    path('home', views.home, name='home'),
 ]

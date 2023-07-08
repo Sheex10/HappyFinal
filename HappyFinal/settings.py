@@ -71,6 +71,8 @@ TEMPLATES = [
     },
 ]
 LOGIN_REDIRECT_URL ="home"
+LOGOUT_REDIRECT_URL="InicioSesion"
+
 WSGI_APPLICATION = 'HappyFinal.wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

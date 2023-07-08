@@ -12,7 +12,8 @@ from django.contrib.auth.models import User
 #Vistas principales
 
 def home(request):
-    return render(request, 'ApUno/home.html')
+    context={}
+    return render(request, 'ApUno/home.html',context)
 
 def Perros(request):
     listaProductos = Producto.objects.filter(categoria = 4)
@@ -37,7 +38,7 @@ def buscar_interno_producto(request,id):
     return render(request,'ApUno/CamaPerro.html',contexto)
 
 #Vistas para los productos
-
+@login_required
 def EditProducto(request):
     listaProductos = Producto.objects.filter(categoria = 4)
     contexto={
@@ -51,7 +52,7 @@ def CamaPerro(request):
     return render(request, 'ApUno/CamaPerro.html')
 
 #Esto es para cuando se agregue un producto.
-
+@login_required
 def formProductos(request):
     vIdProd= request.POST['id']
     vDescripcion= request.POST['desc']
@@ -68,7 +69,7 @@ def formProductos(request):
         return redirect('Perros')
     if vRegCategoria.id_categoria==3:
         return redirect('Gatos')
-    
+@login_required    
 def Agregar(request):
     listaCategoria=Categoria.objects.all()
     contexto={
@@ -80,6 +81,7 @@ def Agregar(request):
 def InicioSesion(request):
     return render(request, 'ApUno/InicioSesion.html')
 
+@login_required
 def ControlProd(request):
    
     return render(request, 'ApUno/ControlProd.html')
