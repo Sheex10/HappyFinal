@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Producto, Usuario, Categoria
+from .models import Producto, Usuario, Categoria, Rol
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate,login, logout
@@ -104,3 +104,30 @@ def pruebaEDIT(request, id):
     }
     return render(request, 'ApUno/pruebaEDIT.html', contexto)
 #----------------
+
+# REGISTRO DE USUARIO
+def Register(request):
+    return render(request,'ApUno/Registrarse.html')
+
+def formRegistro(request):
+    vNombre = request.POST['nomUser']
+    vApellido = request.POST['apeUser']
+    vClave = request.POST['Contraseña']
+    vCorreo = request.POST['mailUser']
+    vTelefono = request.POST['fonoUser']
+    vRol = 1
+    vRegistroRol = Rol.objects.get(id_rol=vRol)
+
+    valida = Usuario.objects.all()
+    for xmail in valida:
+        if xmail.correo == vCorreo:
+            messages.error(request,"Este correo ya existe!")
+            return redirect('Register')
+    
+    Usuario.objects.create(nombre=vNombre, apellido=vApellido, clave=vClave, correo=vCorreo, 
+                           telefono=vTelefono, rol=vRegistroRol)
+    user = User.objects.create_user(vCorreo,vCorreo,vClave)
+
+    return redirect('Login')
+#--------------------------
+
