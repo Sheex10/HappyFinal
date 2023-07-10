@@ -47,38 +47,63 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <div class="table-responsive">
-        <table class="table  centrar  letraVJ" style="background-color: rgb(255, 255, 255);" id="table">
-            <tr>
-              <th>PRODUCTOS</th>
-              <TH>BOTONES</TH>
-            </tr>
-            {% for l in nomProd %}
-            <tr>
-              <td>
+    <form action="{% url 'ModiProd' %}" method="POST" enctype="multipart/form-data" class="fondoform" name="formulario">
 
-                <img src="{{ l.foto.url }}" alt="No foto" style="width: 15%;height: 15%;"><BR>
-                  <h5 >{{ l.nombre }}</h5>
-              </td>
-              <td>
-                <br><br><a href="{% url 'EditProd2' l.id_producto %}" class="btn btn-primary" >Modificar</a><br><br><br>
-                <a href="{% url 'eliminarProd' l.id_producto %}" class="btn btn-danger">Eliminar</a>
-              </td>
-            </tr>
-            {% endfor %}
+        {% csrf_token %}
 
-            {% if messages %}
-              <ul   class="" style="text-align: center; background-color: rgba(255, 255, 255, 0.908); margin-left: 12%;margin-right: 12%;">
-            {% for message in messages %}
-              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-              </ul>
-            {% endif %}
+        <h1 class="centrar letraLo">Modificar Juego </h1>
 
-    </table>
-    </div>
-    </div><br>
+        <div class="grupo">
+            <label for="" ><h5 style="color: #2196f3;">Foto actual</h5></label><br>
+            <img src="{{ prod.foto.url }}"  alt="Avatar" style="width:150px;height:150px;">
+            </div>
+
+          <div class="grupo">
+           <input accept="image/png,image/jpeg" type="file" class="form-control-file , letraLo , cu1" name="fotoProd" id="fotoProd" style="color: #2196f3"><span class="barra" ></span>
+            <label for=""><h5>Cambiar foto de perfil</h5></label>
+        </div>
+
+        <div class="grupo">
+            <label>ID Producto</label>
+            <input readonly value="{{ prod.id_producto }}" type="number" class="form-control" id="idProd" name="idProd">
+        </div>
+
+
+        <div class="grupo">
+            <label>Nombre</label>
+            <input type="text" class="form-control"  required value="{{ prod.nombre }}" id="nombreProd" name="nombreProd"><span class="barra" ></span>
+        </div>
+
+        <div class="grupo">
+            <label>Descripción</label>
+            <input type="text" class="form-control" required value="{{ prod.descripcion }}" id="descripcionProd" name="descripcionProd">
+        </div>
+
+        <div class="grupo">
+            <label>Precio</label>
+            <input type="text" class="form-control" required value="{{ prod.precio }}" id="PrecioProd" name="PrecioProd">
+        </div>
+
+        <div class="grupo">
+            <label>Stock</label>
+            <input type="text" class="form-control" required value="{{ prod.stock }}" id="StockProd" name="StockProd">
+        </div>
+
+        <div class="grupo">
+            <label>Tipo mascota</label>
+           <select class="form-control" name="categoriaProd" required id="categoriaProd">
+                {% for r in tipo_mascota %}
+                    {% if r.id_categoria == prod.Categoria.id_categoria %}
+                        <option value="{{ r.id_categoria }}" selected>{{ r.nombre }}</option>
+                    {% else %}
+                        <option value="{{ r.id_categoria }}">{{ r.nombre }}</option>
+                    {% endif %}
+                {% endfor %}
+           </select>
+        </div>
+        <input type="submit" value="Enviar" class="btn btn letraLo" style="text-align: center; color: rgb(255, 255, 255); background-color: rgb(97, 97, 97); margin-left: auto;">
+
+    </form><br><br>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

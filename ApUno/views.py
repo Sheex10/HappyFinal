@@ -40,7 +40,7 @@ def buscar_interno_producto(request,id):
 #Vistas para los productos
 @login_required
 def EditProducto(request):
-    listaProductos = Producto.objects.filter(categoria = 4)
+    listaProductos = Producto.objects.all()
     contexto={
         "nomProd": listaProductos
 
@@ -89,12 +89,49 @@ def ControlProd(request):
  }
  return render(request, 'ApUno/ControlProd.html',contexto)
 
-def eliminarProd (request):
-    producto = Producto.objects.get()
+def eliminarProd (request, id):
+    producto = Producto.objects.get(id_producto = id)
     producto.delete()
-    return redirect('lista')
+    return redirect('EditProducto')
 
 #----------------
+def EditProd2 (request, id):
+    TipoProd = Categoria.objects.all()
+    producto = Producto.objects.get(id_producto = id)
+    contexto ={
+        "tipo_mascota": TipoProd,
+        "prod": producto
+    }
+    return render(request, 'ApUno/EditProd2.html', contexto)
+
+#----------------
+def ModiProd (request):
+    vFotoProd = request.FILES.get('fotoProd' , '')
+    vIDProd = request.POST['idProd']
+    vNombreProd = request.POST['nombreProd']
+    vDescProd = request.POST['descripcionProd']
+    vPrecioProd = request.POST['PrecioProd']
+    vStockProd = request.POST['StockProd']
+    vCategoriaProd = request.POST['categoriaProd']
+
+    ProductoModi = Producto.objects.get(id_producto = vIDProd)
+    ProductoModi.nombre = vNombreProd
+    ProductoModi.descripcion = vDescProd
+    ProductoModi.precio = vPrecioProd
+    ProductoModi.stock = vStockProd
+
+    registroCa = Categoria.objects.get(id_categoria = vCategoriaProd)
+    ProductoModi.categoria = registroCa
+
+    if vFotoProd!='':
+        ProductoModi.foto=vFotoProd
+
+    ProductoModi.save()
+    messages.success(request,"Producto modificado.")
+    return redirect('EditProducto')
+
+#----------------
+
 def pruebaEDIT(request, id):
     prod = Producto.objects.all()
     produ = Producto.objects.get(codigoChip = id)
