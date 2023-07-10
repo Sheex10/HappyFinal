@@ -83,11 +83,24 @@ def InicioSesion(request):
 
 @login_required
 def ControlProd(request):
-   
-    return render(request, 'ApUno/ControlProd.html')
+ lista= Producto.objects.all()
+ contexto = {
+    "producto": lista
+ }
+ return render(request, 'ApUno/ControlProd.html',contexto)
+
+def eliminarProd (request):
+    producto = Producto.objects.get()
+    producto.delete()
+    return redirect('lista')
 
 #----------------
-def pruebaEDIT(request):
-   
-    return render(request, 'ApUno/pruebaEDIT.html')
+def pruebaEDIT(request, id):
+    prod = Producto.objects.all()
+    produ = Producto.objects.get(codigoChip = id)
+    contexto = {
+        "lista_razas": prod,
+        "datos": produ
+    }
+    return render(request, 'ApUno/pruebaEDIT.html', contexto)
 #----------------
