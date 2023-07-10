@@ -107,7 +107,7 @@ def pruebaEDIT(request, id):
 
 # REGISTRO DE USUARIO
 def Register(request):
-    return render(request,'ApUno/Registrarse.html')
+    return render(request,'ApUno/Register.html')
 
 def formRegistro(request):
     vNombre = request.POST['nomUser']
