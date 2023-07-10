@@ -79,6 +79,7 @@ def Agregar(request):
     return render(request, 'ApUno/Agregar.html', contexto)
 
 def InicioSesion(request):
+    logout(request)
     return render(request, 'ApUno/InicioSesion.html')
 
 @login_required
@@ -115,7 +116,7 @@ def formRegistro(request):
     vClave = request.POST['Contraseña']
     vCorreo = request.POST['mailUser']
     vTelefono = request.POST['fonoUser']
-    vRol = 1
+    vRol = 2
     vRegistroRol = Rol.objects.get(id_rol=vRol)
 
     valida = Usuario.objects.all()
@@ -128,6 +129,45 @@ def formRegistro(request):
                            telefono=vTelefono, rol=vRegistroRol)
     user = User.objects.create_user(vCorreo,vCorreo,vClave)
 
-    return redirect('Login')
+    return redirect('login')
 #--------------------------
+def InSesion(request):
+    try:
+        vCorreo = request.POST['correoUser']
+        vClave = request.POST['password']
+        vRol = 0
+        vRun= 0
+        registro = Usuario.objects.all()
 
+
+        for i in registro:
+            if i.correo == vCorreo and i.clave == vClave:
+
+                    vRun = i.id_usuario
+                    vRol = i.rol.id_rol
+        user1 = User.objects.get(username = vCorreo)
+        pass_valida = check_password(vClave,user1.password)
+
+        if not pass_valida:
+            messages.error(request,"El usuario o la contraseña son incorrectos")
+            return redirect('InicioSesion')
+
+        user = authenticate(username=vCorreo,password = vClave)
+
+        if user is not None:
+            if vRol == 2:
+                login(request,user)
+                return redirect('Perros')
+
+
+            if vRol == 1:
+                login(request,user)
+                return redirect('ControlProd') 
+
+            if vRol == 0:
+                messages.success(request, "Usuario no registrado")
+                return redirect('InicioSesion')
+    except User.DoesNotExist:
+            messages.error(request,"El usuario no existe")
+            return redirect('InicioSesion')
+    
