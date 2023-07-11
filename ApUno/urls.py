@@ -22,7 +22,7 @@ urlpatterns = [
     path('ModiProd',ModiProd,name="ModiProd"),
     path('razas',Razas, name="Razas"),
     path('InSesion',InSesion,name="InSesion"),
-    path('VerPerfil/<int:id>',VerPerfil,name="VerPerfil")
+    path('VerPerfil/<int:id>',VerPerfil,name="VerPerfil"),
 
 
 
