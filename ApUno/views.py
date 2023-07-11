@@ -90,6 +90,12 @@ def Agregar(request):
     }
     return render(request, 'ApUno/Agregar.html', contexto)
 
+def VerPerfil(request, id):
+    listaUsuario = Usuario.objects.get(id_usuario = id)
+    contexto = {
+        "usuario" : listaUsuario
+    }
+    return render(request,'ApUno/VerPerfil.html',contexto)
 
 def InicioSesion(request):
     logout(request)
