@@ -33,14 +33,14 @@
                         {% if user.is_authenticated %}
                             {{user.username}}
                         {% else %}
-                            <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                            <a class="nav-link" href="{% url 'InicioSesion' %}">Iniciar Sesión</a>
                         {% endif %}
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                        <a class="nav-link" href="{% url 'InicioSesion' %}">Cerrar sesión</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Razas!</a>
+                        <a class="nav-link" href="{% url 'Razas' %}">Razas!</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button"

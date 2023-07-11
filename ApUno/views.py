@@ -2,111 +2,131 @@ from django.shortcuts import render, redirect
 from .models import Producto, Usuario, Categoria, Rol
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth import authenticate,login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 # Create your views here.
 
-#Vistas principales
+# Vistas principales
+
 
 def home(request):
-    context={}
-    return render(request, 'ApUno/home.html',context)
+    context = {}
+    return render(request, 'ApUno/home.html', context)
+
 
 def Perros(request):
-    listaProductos = Producto.objects.filter(categoria = 4)
-    contexto={
+    listaProductos = Producto.objects.filter(categoria=4)
+    contexto = {
         "nomProd": listaProductos
 
     }
-    return render(request,'ApUno/Perros.html', contexto)
+    return render(request, 'ApUno/Perros.html', contexto)
+
 
 def Gatos(request):
-    listaProductos = Producto.objects.filter(categoria = 3)
-    contexto={
+    listaProductos = Producto.objects.filter(categoria=3)
+    contexto = {
         "nomProd": listaProductos
     }
     return render(request, 'ApUno/Gatos.html', contexto)
 
-def buscar_interno_producto(request,id):
-    prod = Producto.objects.get(id_producto = id)
+
+def buscar_interno_producto(request, id):
+    prod = Producto.objects.get(id_producto=id)
     contexto = {
         "nombree": prod
     }
-    return render(request,'ApUno/CamaPerro.html',contexto)
+    return render(request, 'ApUno/CamaPerro.html', contexto)
 
-#Vistas para los productos
+# Vistas para los productos
+
+
 @login_required
 def EditProducto(request):
     listaProductos = Producto.objects.all()
-    contexto={
+    contexto = {
         "nomProd": listaProductos
 
     }
-    return render(request,'ApUno/EditProducto.html',contexto)
+    return render(request, 'ApUno/EditProducto.html', contexto)
+
 
 def CamaPerro(request):
-   
+
     return render(request, 'ApUno/CamaPerro.html')
 
-#Esto es para cuando se agregue un producto.
+# Esto es para cuando se agregue un producto.
+
+
 @login_required
 def formProductos(request):
-    vIdProd= request.POST['id']
-    vDescripcion= request.POST['desc']
-    vPrecio= request.POST['precio']
-    vFoto=request.FILES['foto']
-    vCategoria=request.POST['categoria']
-    vStock=request.POST['stock']
-    vNombre=request.POST['nombre']
-    vRegCategoria=Categoria.objects.get(id_categoria=vCategoria)
+    vIdProd = request.POST['id']
+    vDescripcion = request.POST['desc']
+    vPrecio = request.POST['precio']
+    vFoto = request.FILES['foto']
+    vCategoria = request.POST['categoria']
+    vStock = request.POST['stock']
+    vNombre = request.POST['nombre']
+    vRegCategoria = Categoria.objects.get(id_categoria=vCategoria)
 
-    Producto.objects.create(nombre=vNombre, id_producto=vIdProd, descripcion=vDescripcion,  precio=vPrecio, foto=vFoto, categoria=vRegCategoria, stock=vStock)
+    Producto.objects.create(nombre=vNombre, id_producto=vIdProd, descripcion=vDescripcion,
+                            precio=vPrecio, foto=vFoto, categoria=vRegCategoria, stock=vStock)
 
-    if vRegCategoria.id_categoria==4:
+    if vRegCategoria.id_categoria == 4:
         return redirect('Perros')
-    if vRegCategoria.id_categoria==3:
+    if vRegCategoria.id_categoria == 3:
         return redirect('Gatos')
-@login_required    
+
+
+@login_required
 def Agregar(request):
-    listaCategoria=Categoria.objects.all()
-    contexto={
-        "Categorias":listaCategoria
+    listaCategoria = Categoria.objects.all()
+    contexto = {
+        "Categorias": listaCategoria
 
     }
     return render(request, 'ApUno/Agregar.html', contexto)
 
+
 def InicioSesion(request):
+    logout(request)
     return render(request, 'ApUno/InicioSesion.html')
+
 
 @login_required
 def ControlProd(request):
- lista= Producto.objects.all()
- contexto = {
-    "producto": lista
- }
- return render(request, 'ApUno/ControlProd.html',contexto)
+    lista = Producto.objects.all()
+    contexto = {
+        "producto": lista
+    }
+    return render(request, 'ApUno/ControlProd.html', contexto)
 
-def eliminarProd (request, id):
-    producto = Producto.objects.get(id_producto = id)
+
+def eliminarProd(request, id):
+    producto = Producto.objects.get(id_producto=id)
     producto.delete()
     return redirect('EditProducto')
 
-#----------------
-def EditProd2 (request, id):
+# ----------------
+
+
+def EditProd2(request, id):
     TipoProd = Categoria.objects.all()
-    producto = Producto.objects.get(id_producto = id)
-    contexto ={
+    producto = Producto.objects.get(id_producto=id)
+    contexto = {
         "tipo_mascota": TipoProd,
         "prod": producto
     }
     return render(request, 'ApUno/EditProd2.html', contexto)
 
-#----------------
-def ModiProd (request):
-    vFotoProd = request.FILES.get('fotoProd' , '')
+# ----------------
+
+
+def ModiProd(request):
+    vFotoProd = request.FILES.get('fotoProd', '')
     vIDProd = request.POST['idProd']
     vNombreProd = request.POST['nombreProd']
     vDescProd = request.POST['descripcionProd']
@@ -114,37 +134,41 @@ def ModiProd (request):
     vStockProd = request.POST['StockProd']
     vCategoriaProd = request.POST['categoriaProd']
 
-    ProductoModi = Producto.objects.get(id_producto = vIDProd)
+    ProductoModi = Producto.objects.get(id_producto=vIDProd)
     ProductoModi.nombre = vNombreProd
     ProductoModi.descripcion = vDescProd
     ProductoModi.precio = vPrecioProd
     ProductoModi.stock = vStockProd
 
-    registroCa = Categoria.objects.get(id_categoria = vCategoriaProd)
+    registroCa = Categoria.objects.get(id_categoria=vCategoriaProd)
     ProductoModi.categoria = registroCa
 
-    if vFotoProd!='':
-        ProductoModi.foto=vFotoProd
+    if vFotoProd != '':
+        ProductoModi.foto = vFotoProd
 
     ProductoModi.save()
-    messages.success(request,"Producto modificado.")
+    messages.success(request, "Producto modificado.")
     return redirect('EditProducto')
 
-#----------------
+# ----------------
+
 
 def pruebaEDIT(request, id):
     prod = Producto.objects.all()
-    produ = Producto.objects.get(codigoChip = id)
+    produ = Producto.objects.get(codigoChip=id)
     contexto = {
         "lista_razas": prod,
         "datos": produ
     }
     return render(request, 'ApUno/pruebaEDIT.html', contexto)
-#----------------
+# ----------------
 
 # REGISTRO DE USUARIO
+
+
 def Register(request):
-    return render(request,'ApUno/Register.html')
+    return render(request, 'ApUno/Register.html')
+
 
 def formRegistro(request):
     vNombre = request.POST['nomUser']
@@ -152,19 +176,63 @@ def formRegistro(request):
     vClave = request.POST['Contraseña']
     vCorreo = request.POST['mailUser']
     vTelefono = request.POST['fonoUser']
-    vRol = 1
+    vRol = 2
     vRegistroRol = Rol.objects.get(id_rol=vRol)
 
     valida = Usuario.objects.all()
     for xmail in valida:
         if xmail.correo == vCorreo:
-            messages.error(request,"Este correo ya existe!")
+            messages.error(request, "Este correo ya existe!")
             return redirect('Register')
-    
-    Usuario.objects.create(nombre=vNombre, apellido=vApellido, clave=vClave, correo=vCorreo, 
+
+    Usuario.objects.create(nombre=vNombre, apellido=vApellido, clave=vClave, correo=vCorreo,
                            telefono=vTelefono, rol=vRegistroRol)
-    user = User.objects.create_user(vCorreo,vCorreo,vClave)
+    user = User.objects.create_user(vCorreo, vCorreo, vClave)
 
-    return redirect('Login')
-#--------------------------
+    return redirect('InicioSesion')
+# --------------------------
 
+
+def Razas(request):
+    return render(request, 'ApUno/Razas.html')
+# PARA EL INICIO SESION
+
+
+def InSesion(request):
+    try:
+        vCorreo = request.POST['correoUser']
+        vClave = request.POST['password']
+        vRol = 0
+        vRun = 0
+        registro = Usuario.objects.all()
+
+        for i in registro:
+            if i.correo == vCorreo and i.clave == vClave:
+
+                vRun = i.id_usuario
+                vRol = i.rol.id_rol
+        user1 = User.objects.get(username=vCorreo)
+        pass_valida = check_password(vClave, user1.password)
+
+        if not pass_valida:
+            messages.error(
+                request, "El usuario o la contraseña son incorrectos")
+            return redirect('InicioSesion')
+
+        user = authenticate(username=vCorreo, password=vClave)
+
+        if user is not None:
+            if vRol == 2:
+                login(request, user)
+                return redirect('home')
+
+            if vRol == 1:
+                login(request, user)
+                return redirect('ControlProd')
+
+            if vRol == 0:
+                messages.success(request, "Usuario no registrado")
+                return redirect('InicioSesion')
+    except User.DoesNotExist:
+            messages.error(request, "El usuario no existe")
+            return redirect('InicioSesion')
