@@ -37,6 +37,13 @@ def buscar_interno_producto(request,id):
     }
     return render(request,'ApUno/CamaPerro.html',contexto)
 
+def VerPerfil(request,id):
+    listaUsuario = Usuario.objects.get(id_usuario = id)
+    contexto = {
+        "usuario" : listaUsuario
+    }
+    return render(request,'ApUno/VerPerfil.html',contexto)
+
 #Vistas para los productos
 @login_required
 def EditProducto(request):
