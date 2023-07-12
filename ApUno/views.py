@@ -16,6 +16,10 @@ def home(request):
     context = {}
     return render(request, 'ApUno/home.html', context)
 
+def homeJefe(request):
+    context = {}
+    return render(request, 'ApUno/homeJefe.html', context)
+
 
 def Perros(request):
     listaProductos = Producto.objects.filter(categoria=4)
@@ -90,12 +94,14 @@ def Agregar(request):
     }
     return render(request, 'ApUno/Agregar.html', contexto)
 
-def VerPerfil(request, id):
-    listaUsuario = Usuario.objects.get(id_usuario = id)
+def VerPerfil(request):
+    datUsuario = Usuario.objects.all()
     contexto = {
-        "usuario" : listaUsuario
+        "dtUsuario": datUsuario
+
     }
-    return render(request,'ApUno/VerPerfil.html',contexto)
+    return render(request, 'ApUno/VerPerfil.html', contexto)
+
 
 def InicioSesion(request):
     logout(request)
@@ -234,7 +240,7 @@ def InSesion(request):
 
             if vRol == 1:
                 login(request, user)
-                return redirect('ControlProd')
+                return redirect('homeJefe')
 
             if vRol == 0:
                 messages.success(request, "Usuario no registrado")
@@ -242,3 +248,5 @@ def InSesion(request):
     except User.DoesNotExist:
             messages.error(request, "El usuario no existe")
             return redirect('InicioSesion')
+
+
