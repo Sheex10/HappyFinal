@@ -181,6 +181,8 @@ def pruebaEDIT(request, id):
 def Register(request):
     return render(request, 'ApUno/Register.html')
 
+def RecuperarContra(request):
+    return render(request, 'ApUno/RecuperarContra.html')
 
 def formRegistro(request):
     vNombre = request.POST['nomUser']
@@ -248,5 +250,8 @@ def InSesion(request):
     except User.DoesNotExist:
             messages.error(request, "El usuario no existe")
             return redirect('InicioSesion')
+
+def Carrito(request):
+    return render(request,'ApUno/Carrito.html')
 
 
