@@ -16,6 +16,7 @@ def home(request):
     context = {}
     return render(request, 'ApUno/home.html', context)
 
+
 def homeJefe(request):
     context = {}
     return render(request, 'ApUno/homeJefe.html', context)
@@ -94,10 +95,12 @@ def Agregar(request):
     }
     return render(request, 'ApUno/Agregar.html', contexto)
 
+
+@login_required(login_url='InicioSesion')
 def VerPerfil(request):
     datUsuario = Usuario.objects.all()
     contexto = {
-        "dtUsuario": datUsuario
+        "usuarios": datUsuario
 
     }
     return render(request, 'ApUno/VerPerfil.html', contexto)
@@ -181,8 +184,10 @@ def pruebaEDIT(request, id):
 def Register(request):
     return render(request, 'ApUno/Register.html')
 
+
 def RecuperarContra(request):
     return render(request, 'ApUno/RecuperarContra.html')
+
 
 def formRegistro(request):
     vNombre = request.POST['nomUser']
@@ -238,7 +243,7 @@ def InSesion(request):
         if user is not None:
             if vRol == 2:
                 login(request, user)
-                return redirect('home')
+                return redirect('VerPerfil')
 
             if vRol == 1:
                 login(request, user)
@@ -248,10 +253,36 @@ def InSesion(request):
                 messages.success(request, "Usuario no registrado")
                 return redirect('InicioSesion')
     except User.DoesNotExist:
-            messages.error(request, "El usuario no existe")
-            return redirect('InicioSesion')
+        messages.error(request, "El usuario no existe")
+        return redirect('InicioSesion')
+
 
 def Carrito(request):
-    return render(request,'ApUno/Carrito.html')
+    return render(request, 'ApUno/Carrito.html')
 
+@login_required
+def ModiPerfil(request):
+    datUsu = Usuario.objects.all()
+    contexto = {
+        "usuarios": datUsu
+    }
+    return render(request, 'ApUno/ModiPerfil.html', contexto)
 
+@login_required(login_url='InicioSesion')
+def FormPerfilXD(request):
+    vNombreUser = request.POST['nomUser']
+    vApellidoUser = request.POST['apeUser']
+    vCorreoUser = request.POST['correoUser']
+    vFonoUser = request.POST['fonoUser']
+
+    correoU = request.user.username
+    FormPerfilXD = Usuario.objects.get(correo=correoU)
+
+    FormPerfilXD.nombre = vNombreUser
+    FormPerfilXD.apellido = vApellidoUser
+    FormPerfilXD.correo = vCorreoUser
+    FormPerfilXD.telefono = vFonoUser
+    FormPerfilXD.save()
+    messages.success(request, "Perfil Modificado!.")
+
+    return redirect('VerPerfil')
