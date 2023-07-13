@@ -1,18 +1,17 @@
 $(document).ready(function(){
     $("#loginform").submit(function(e){
         e.preventDefault();
-        var nombre = $("#nombre").val();
-        var apellido = $("#apellido").val();
-        var usuario = $("#usuario").val();
-        var email = $("#email").val();
-        var contrasena = $("#clave").val();
-        var confirmacion = $("#confirmacion").val();
+        var nombre = $("#nomUser").val();
+        var apellido = $("#apeUser").val();       
+        var email = $("#mailUser").val();
+        var contrasena = $("#Contraseña").val();
+        var confirmacion = $("#conContraseña").val();
 
         let mensaje = "";
         let enviar = false;
 
         //Validar nombre
-        if(nombre.length < 4 || nombre.length > 10){
+        if(nombre.trim().length < 3 || nombre.trim().length > 99){
             mensaje += "Nombre: El nombre de usuario debe tener al menos 4 a 10 caracteres";
             enviar = true;
         }
@@ -31,7 +30,7 @@ $(document).ready(function(){
             enviar=true;
         }*/
         //Validar apellido
-        if(apellido.trim().length < 4 || apellido.trim().length > 10){
+        if(apellido.trim().length < 3 || apellido.trim().length > 99){
             mensaje += "<br>Apellido: El apellido debe tener al menos 4 a 10 caracteres";
             enviar = true;
         }
@@ -50,7 +49,7 @@ $(document).ready(function(){
             enviar=true;
         }*/
         //Validar Usuario
-        if(usuario.trim().length < 4 || usuario.trim().length > 10){
+        if(usuario.trim().length < 3 || usuario.trim().length > 99){
             mensaje += "<br>Usuario: El usuario debe tener al menos 4 a 10 caracteres";
             enviar = true;
         }
