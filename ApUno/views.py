@@ -190,22 +190,22 @@ def RecuperarContra(request):
 
 
 def formRegistro(request):
+    vIdUser = request.POST['id_user']
     vNombre = request.POST['nomUser']
     vApellido = request.POST['apeUser']
-    vClave = request.POST['Contraseña']
+    vClave = request.POST['Contrasena']
     vCorreo = request.POST['mailUser']
     vTelefono = request.POST['fonoUser']
     vRol = 2
-    vRegistroRol = Rol.objects.get(id_rol=vRol)
-
+    vRegistroRol = Rol.objects.get(nombreRol="usuario")
+    print(f"aaaaaaaaaaa: {vRegistroRol}")
     valida = Usuario.objects.all()
     for xmail in valida:
         if xmail.correo == vCorreo:
             messages.error(request, "Este correo ya existe!")
             return redirect('Register')
 
-    Usuario.objects.create(nombre=vNombre, apellido=vApellido, clave=vClave, correo=vCorreo,
-                           telefono=vTelefono, rol=vRegistroRol)
+    Usuario.objects.create(id_usuario= vIdUser,nombre=vNombre, apellido=vApellido, clave=vClave, correo=vCorreo,telefono=vTelefono, rol=vRegistroRol)
     user = User.objects.create_user(vCorreo, vCorreo, vClave)
 
     return redirect('InicioSesion')
