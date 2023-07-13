@@ -95,8 +95,8 @@ def Agregar(request):
     return render(request, 'ApUno/Agregar.html', contexto)
 
 @login_required (login_url= 'InicioSesion' )
-def VerPerfil(request,id):
-    datUsuario = Usuario.objects.get(id_usuario=id)
+def VerPerfil(request):
+    datUsuario = Usuario.objects.all()
     contexto = {
         "usuarios": datUsuario
 
@@ -239,7 +239,7 @@ def InSesion(request):
         if user is not None:
             if vRol == 2:
                 login(request, user)
-                return redirect('home')
+                return redirect('VerPerfil')
 
             if vRol == 1:
                 login(request, user)
