@@ -94,10 +94,11 @@ def Agregar(request):
     }
     return render(request, 'ApUno/Agregar.html', contexto)
 
-def VerPerfil(request):
-    datUsuario = Usuario.objects.all()
+@login_required (login_url= 'InicioSesion' )
+def VerPerfil(request,id):
+    datUsuario = Usuario.objects.get(id_usuario=id)
     contexto = {
-        "dtUsuario": datUsuario
+        "usuarios": datUsuario
 
     }
     return render(request, 'ApUno/VerPerfil.html', contexto)
